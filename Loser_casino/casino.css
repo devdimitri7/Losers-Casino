@@ -1,0 +1,160 @@
+#bloc_de_page
+{
+	width: 800px;
+}
+section h1, nav a
+{
+	font-family: Dayrom, serif;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+#titre
+{
+	display: flex;
+	flex-direction: column;
+}
+#logo
+{
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+}
+#logo img
+{
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+}
+header h1
+{
+	font-family: serif;
+	font-size: 2.5em;
+	font-weight: normal;
+	margin: 0 0 0 10px;
+	color: white;
+}
+header h2
+{
+	font-family: Dayrom, serif;
+	font-size: 1.1em;
+	margin-top: 0px;
+	font-weight: normal;
+	color: white;
+}
+nav ul
+{
+	list-style-type: none;
+	display: flex;
+	position: relative;
+	right: 0px;
+	top: 0px;
+	color: white;
+}
+nav li
+{
+	margin-right: 15px;
+}
+nav a:hover 
+{
+	color: #760001;
+	border-bottom: 3px solid #760001;
+}
+aside
+{
+	background-image: url("casino_fond.jpeg") no-repeat;
+}
+
+#barnierre1 
+{
+	margin-top: 15px;
+	height: 200px;
+	border-radius: 5px;
+	background: url("lajan.jpeg") no-repeat;
+	position: relative;
+	box-shadow: 0px 4px 4px #1cla19;
+	margin-bottom: 25px;
+}
+#descrip
+{
+	position: absolute;
+	bottom: 0;
+	border-radius: 0px 0px 5px 5px;
+	width: 99.5%;
+    height: 33px;
+    padding-top: 15px;
+    padding-left: 4px;
+    background-color: #E44949;
+    color: white;
+    font-size: 0.8em;
+}
+th,td
+{
+	border: 1px dashed white;
+
+}
+table
+{
+	border-collapse: collapse;
+	width: 100px;
+	height: 100px;
+	color: white;
+	background-color: #E44949;
+
+
+}
+article
+{
+	text-align: center;
+	font-family: monospace;
+	font-size: 20px;
+	margin-left: 400px;
+	color: white;
+}
+.bonus
+{
+	width: 80px;
+	height: 78px;
+	float: left top;
+
+}
+#barre 
+{
+	display: flex;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	font-size: 30px;
+	color: white;
+}
+.rech
+{
+	height: 20px;
+	color: black;
+}
+body 
+{
+	background-image: url(cfond.jpeg) ;
+	background-attachment: fixed;
+}
+#konekte 
+{
+	width: 1000px;
+	height: 1000px;
+	text-align: center;
+	margin-left: 120px;
+	color: white;
+}
+p 
+{
+	color: white;
+}
+#bat 
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+
+
+
+
