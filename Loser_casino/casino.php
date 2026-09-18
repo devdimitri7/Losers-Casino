@@ -1,154 +1,109 @@
-<!Doctype html>
-	<html>
-	<head>
-		<meta charset="utf-8" />
-		<link rel="stylesheet" href="casino.css" />
+<?php
+require_once __DIR__ . '/includes/db.php';
+session_start();
 
-		<title>Le casino</title>
-	</head>
+$db = getDb();
+$topWins = $db->query(
+    'SELECT u.username, b.gain, b.mise, b.created_at
+     FROM bets b JOIN users u ON u.id = b.user_id
+     ORDER BY b.gain DESC LIMIT 3'
+)->fetchAll();
 
+$estKonekte = !empty($_SESSION['user_id']);
+?>
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="casino.css" />
+    <title>Loser Casino</title>
+</head>
+<body>
+<div id="bloc_de_page">
+    <header>
+        <div id="titre">
+            <div id="logo">
+                <img src="casino12.jpg" alt="Logo Loser Casino" />
+                <h1>Loser Casino</h1>
+            </div>
+            <h2>Kazino pèdan yo</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Poker</a></li>
+                <li><a href="#">Jeu de kat</a></li>
+                <li><a href="roulette.php">Roulèt</a></li>
+                <?php if ($estKonekte): ?>
+                    <li><a href="logout.php">Dekonekte</a></li>
+                <?php else: ?>
+                    <li><a href="login.php">Konekte</a></li>
+                    <li><a href="register.php">Enskri w</a></li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </header>
 
-	<Body>
-		<div id="bloc_de_page" >
-		    <header>
-				<div id="titre">
-					<div id="logo">
-						<img src="casino12.jpg" alt="casino" />
-				<h1>Dimitri casino</h1>
-				    </div>
-				<h2>Casino des perdants</h2>
-			    </div>
-			    <nav>
-			    	<ul>
-			    		<li href="#">Poker</li>
-			    		<li href="#">Jeux de carte</li>
-			    		<li href="#">Roulette</li>
-			    	</ul>
-			    </nav>
-			</header>
-			<div id="barnierre1" >
-				<div id="descrip">
-					Gagné de l'argent !
-					<a href="#" class="loto">Voir plus...</a>
-				</div>
-			</div>
-		<div id="barre" >
-			<ul>
-				<li href="#">Acceuil</li>
-				<li href="#">Menu</li>
-			</ul>
-			<label for="recherche">Recherche</label> : <input type="search" name="recherche"  id="recherche" rows="10" cols="10" size="30" class="rech"/>
-		</div>
-		
+    <div id="barnierre1">
+        <div id="descrip">
+            Genyen lajan !
+            <a href="roulette.php" class="loto">Wè plis...</a>
+        </div>
+    </div>
 
-		<section>
-			<aside><img src="bol.jpeg" alt="" class="bol"/>
-				<p>Derniers gros gains</p>
-				<table>
-					<caption>Mars 2024</caption>
-					<thead>
-					  <tr>
-						 <th>Joueurs</th>
-						 <th>Gains</th>
-						 <th>Jeux</th>
-						 <th>Mise</th>
-					  </tr>
-					</thead>
-					<tbody>
-						<tr>
-						   <td>Matéo</td>
-						   <td>41,000,000$</td>
-						   <td>Roulette</td>
-						   <td>1000$</td>
-						</tr>
-						<tr>
-							<td>Dimitri</td>
-							<td>24,678,000$</td>
-							<td>Poker</td>
-							<td>300$</td>
-						</tr>
-						<tr>
-							<td>Max</td>
-							<td>10,876,110$</td>
-							<td>Carte</td>
-							<td>2000$</td>
-						</tr>
-					</tbody>
+    <section>
+        <aside>
+            <img src="bol.jpeg" alt="" class="bol" />
+            <p>Dènye gwo genyen yo</p>
+            <table>
+                <caption>Klasman jeneral</caption>
+                <thead>
+                    <tr><th>Jwè</th><th>Genyen</th><th>Mize</th></tr>
+                </thead>
+                <tbody>
+                    <?php if ($topWins): ?>
+                        <?php foreach ($topWins as $w): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($w['username'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo number_format($w['gain'], 2); ?> G</td>
+                                <td><?php echo number_format($w['mise'], 2); ?> G</td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr><td colspan="3">Poko gen genyen anrejistre. Vin jwe premye !</td></tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </aside>
 
-				</table>
-			</aside>
-			<article>
-				<img src="bonus.jpeg" class="bonus" alt='' />
-				<h1>Encaissez vos points de victoire.</h1>
-				<p>Maintenant sur Dimitri casino. Si, vous avez fait trois gains , supérieur à 10,000,000 $. Vous aurez un profit de <a href="#" >voir plus...</a></p>
-			</article>
-		</section>
+        <article>
+            <img src="bonus.jpeg" class="bonus" alt="Bonus" />
+            <h2>Ankese pwen viktwa ou yo.</h2>
+            <p>
+                Kounye a sou Loser Casino. Si w fè twa genyen, siperyè a 10,000,000 gourdes,
+                w ap resevwa yon pwofi <a href="#">wè plis...</a>
+            </p>
+        </article>
+    </section>
 
-		<p>Connectez-vous maintenant</p>
-		<form method="post" action="valide.php" >
-			
-				<div id="konekte">
-					<fieldset>
-				       <legend>Vos coordonnées</legend>
-				       <p> <label for="identifiant">Votre identifiant</label> : <input type="text" name="identifiant" id="identifiant" /><br />
-				       <label for="password" >Mot de passe</label> : <input type="password" name="password" id="password" /><br />
+    <?php if (!$estKonekte): ?>
+        <p>Konekte oswa enskri w kounye a pou jwe.</p>
+    <?php endif; ?>
+</div>
 
-				       <input type="button" value="Connection" /></p>
-				    </fieldset>
-				</div>
-
-		
-
-
-
-
-
-
-	</Body>
-	<footer>
-		<div id="bat">
-			<div id="enfo">
-				<p>(©)copyright-tous droits réservés | Dimitri Mathieu<br />
-					<a href="#"> Contactez moi !</a><br />
-				Téléphone (509) 4043-0402</p>
-			</div>
-			<div id="pro">
-			<h1>À propos de créateur</h1>
-			<p>Pour tous infos cliquez <a href="#">ici</a></p>
-			<h2>Derniers article de la semaine</h2>
-			<a href="#">Le bonus</a><br />
-			<a href="#">le nouveau jeux</a>
-			
-	        </div>
-	        <div id="je">
-	        	<p>ce jeux est interdit aux moins de 18 ans<br />
-	        		Salut à vous amateur de jeux !
-	        	Inscrivez-vous</p>
-	      
-
-	        	
-
-	        </div>
-	    </div>
-	</footer>
-
-			
-
+<footer>
+    <div id="bat">
+        <div id="enfo">
+            <p>
+                (©) copyright - tout dwa rezève | Dimitri Mathieu<br />
+                <a href="#">Kontakte m !</a><br />
+                Telefòn (509) 4043-0402
+            </p>
+        </div>
+        <div id="je">
+            <p>Jwèt sa a entèdi pou moun ki gen mwens pase 18 ane</p>
+        </div>
+    </div>
+</footer>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

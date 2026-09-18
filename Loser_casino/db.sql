@@ -1,0 +1,39 @@
+-- Schema Loser Casino
+-- Kreye baz done a: mysql -u root -p < db.sql
+
+CREATE DATABASE IF NOT EXISTS loser_casino CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE loser_casino;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    balance DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    type ENUM('depo', 'genyen', 'pèdi') NOT NULL,
+    amount DECIMAL(12,2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE IF NOT EXISTS bets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    mise DECIMAL(12,2) NOT NULL,
+    n1 TINYINT NOT NULL,
+    n2 TINYINT NOT NULL,
+    n3 TINYINT NOT NULL,
+    r1 TINYINT NOT NULL,
+    r2 TINYINT NOT NULL,
+    r3 TINYINT NOT NULL,
+    gain DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
+
+CREATE INDEX idx_bets_gain ON bets(gain DESC);
